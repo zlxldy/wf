@@ -10,5 +10,8 @@ Linux输入以下命令
 ```bash
 $ git clone https://github.com/zlxldy/wf.git
 $ cd wf
-$ make
+$ make #g++编译器
+$ make -f clang.mak #clang++编译器
 ```
+
+windows同理，不过还准备了两个ps1脚本（clangb.ps1、gccb.ps1）看名字大概就知道怎么选择运行了
