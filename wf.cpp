@@ -1,23 +1,23 @@
 #include <iostream>
 #include <filesystem>
 #include <chrono>
-
-using time_point = std::chrono::time_point<std::chrono::system_clock>;
-
-#define TYPE_FILE "<FILE>"std::s
-#define TYPE_DIR  "< DIR>"std::s
-
-typedef struct item
-{
-    std::string name;
-    std::string type;
-    long long   size;
-    time_point last_write_time;
-    std::string permissions;
-};
+#include "tf.hpp"
 
 int main(int argc, char const *argv[])
 {
-    
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <directory_path>" << std::endl;
+        return -1;
+    }
+    std::string path = argv[1];
+    if (!fs::exists(path) || !fs::is_directory(path)) {
+        std::cerr << "Invalid directory path: " << path << std::endl;
+        return 1;
+    }
+    fs::path dir_path(path);
+    std::vector<item> items = trav(dir_path);
+    for (const auto& it : items) {
+        it.print();
+    }
     return 0;
 }
