@@ -1,0 +1,1 @@
+clang++ --std=c++17 -Wall -O2 -o wf wf.cpp tf.cpp 
