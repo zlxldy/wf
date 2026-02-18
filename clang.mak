@@ -6,5 +6,6 @@ SOURCES = wf.cpp tf.cpp
 $(TARGET): $(SOURCES)
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)
 
-clean:
-	del $(TARGET).exe
+clean: FORCE
+	del $(TARGET)
+FORCE:
