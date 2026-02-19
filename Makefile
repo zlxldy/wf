@@ -7,5 +7,5 @@ $(TARGET): $(SOURCES)
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)
 
 clean: FORCE
-	del $(TARGET)
+	rm $(TARGET)
 FORCE:
