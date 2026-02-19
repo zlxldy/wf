@@ -6,6 +6,6 @@
 #include <iostream>
 #include "item.hpp"
 
-std::vector<item> trav(const fs::path& path);
+std::vector<item> trav(fs::path& path, bool nerd);
 
 #endif

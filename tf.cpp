@@ -4,14 +4,28 @@
 #include "item.hpp"
 #include "tf.hpp"
 
-std::vector<item> trav(const fs::path& path)
+std::vector<item> trav(fs::path& path, bool nerd = false)
 {
     std::vector<item> items;
     for (const auto& entry : fs::directory_iterator(path))
     {
         item it;
         it.name = entry.path().filename().string();
-        it.type = entry.is_directory() ? TYPE_DIR : TYPE_FILE;
+        
+        if (nerd) {
+            if (entry.is_directory()) {
+                it.type = NERD_DIR;
+            } else {
+                it.type = NERD_FILE;
+            }
+        } else {
+            if (entry.is_directory()) {
+                it.type = TYPE_DIR;
+            } else {
+                it.type = TYPE_FILE;
+            }
+        }
+
         it.size = entry.is_regular_file() ? fs::file_size(entry) : 0;
 
         auto ftime = std::filesystem::last_write_time(entry);
