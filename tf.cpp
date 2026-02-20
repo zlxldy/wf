@@ -4,6 +4,8 @@
 #include "item.hpp"
 #include "tf.hpp"
 
+namespace fs = std::filesystem;
+
 std::vector<item> trav(fs::path& path, bool nerd = false)
 {
     std::vector<item> items;
