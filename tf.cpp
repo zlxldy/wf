@@ -1,10 +1,23 @@
 #include <filesystem>
 #include <vector>
-#include <iostream>
+#include <string>
 #include "item.hpp"
 #include "tf.hpp"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 namespace fs = std::filesystem;
+
+bool is_hidden(const fs::path& path) {
+    #ifdef _WIN32
+    DWORD attrs = GetFileAttributesW(path.wstring().c_str());
+    return (attrs != INVALID_FILE_ATTRIBUTES) && (attrs & FILE_ATTRIBUTE_HIDDEN);
+    #else
+    return path.filename().string().front() == '.';
+    #endif
+}
 
 std::vector<item> trav(fs::path& path, bool nerd = false)
 {
@@ -13,18 +26,18 @@ std::vector<item> trav(fs::path& path, bool nerd = false)
     {
         item it;
         it.name = entry.path().filename().string();
-        
-        if (nerd) {
-            if (entry.is_directory()) {
-                it.type = NERD_DIR;
+
+        if (entry.is_directory()) {
+            if (nerd) {
+                it.type = is_hidden(entry) ? NDHD_DIR : NERD_DIR;
             } else {
-                it.type = NERD_FILE;
+                it.type = is_hidden(entry) ? TPHD_DIR : TYPE_DIR;
             }
         } else {
-            if (entry.is_directory()) {
-                it.type = TYPE_DIR;
+            if (nerd) {
+                it.type = is_hidden(entry) ? NDHD_FILE : NERD_FILE;
             } else {
-                it.type = TYPE_FILE;
+                it.type = is_hidden(entry) ? TPHD_FILE : TYPE_FILE;
             }
         }
 

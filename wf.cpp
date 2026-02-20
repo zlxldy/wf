@@ -47,6 +47,7 @@ bool have_arg(std::vector<std::string> args, std::vector<std::string> arg) {
 
 void print_i(const item it, size_t ll) {
     std::cout << it.type.data()
+              << ' '
               << it.name;
     for (size_t i = it.name.length(); i < ll; i++) {
         std::cout << ' ';
