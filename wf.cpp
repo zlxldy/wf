@@ -45,7 +45,10 @@ bool have_arg(std::vector<std::string> args, std::vector<std::string> arg) {
     return false;
 }
 
-void print_i(const item it, size_t ll) {
+void print_i(const item it, size_t ll, bool all = false) {
+    if (!all && is_hidden(it.path)) {
+        return;
+    }
     std::cout << it.type.data()
               << ' '
               << it.name;
@@ -60,7 +63,7 @@ void print_i(const item it, size_t ll) {
               << std::endl;
 }
 
-void print_vi(const std::vector<item>& it) {
+void print_vi(const std::vector<item>& it, bool all = false) {
     size_t ll = 0;
     for (auto i : it) {
         if (i.name.length() > ll) {
@@ -68,7 +71,7 @@ void print_vi(const std::vector<item>& it) {
         }
     }
     for (auto i : it) {
-        print_i(i, ll);
+        print_i(i, ll, all);
     }
 }
 
@@ -80,11 +83,13 @@ int main(int argc, char const *argv[]){
     if (!args.size()) {
         std::cout << "Usage: wf [options] [path]\n"
                   << "Options:\n"
-                  << "  -n, --nerd    Use nerd font icons\n";
+                  << "  -n, --nerd    Use nerd font icons\n"
+                  << "  -a, --all       Show hidden items\n";
         return -1;
     }
 
     bool hvnd = have_arg(args, make_eq_args("-n", "--nerd"));
+    bool hvall = have_arg(args, make_eq_args("-a", "--all"));
 
     std::string path = ".";
     for (std::string arg : args) {
@@ -96,6 +101,6 @@ int main(int argc, char const *argv[]){
 
     fs::path dir_path(path);
     std::vector<item> items = trav(dir_path, hvnd);
-    print_vi(items);
+    print_vi(items, hvall);
     return 0;
 }

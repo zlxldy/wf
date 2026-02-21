@@ -26,7 +26,7 @@ std::vector<item> trav(fs::path& path, bool nerd = false)
     {
         item it;
         it.name = entry.path().filename().string();
-
+        it.path = entry.path();
         if (entry.is_directory()) {
             if (nerd) {
                 it.type = is_hidden(entry) ? NDHD_DIR : NERD_DIR;

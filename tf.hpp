@@ -7,5 +7,6 @@
 #include "item.hpp"
 
 std::vector<item> trav(fs::path& path, bool nerd);
+bool is_hidden(const fs::path& path);
 
 #endif

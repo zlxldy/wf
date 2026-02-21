@@ -17,6 +17,7 @@ using time_point = std::chrono::time_point<std::chrono::system_clock>;
 #define NDHD_DIR u8"\U000f179e"
 
 struct item{
+    fs::path path;
     std::string name;
     std::string type;
     long long   size;
