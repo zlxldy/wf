@@ -6,6 +6,6 @@ SOURCES = wf.cpp tf.cpp
 $(TARGET): $(SOURCES)
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)
 
-clean: FORCE
+clean: FORCE 
 	rm $(TARGET)
 FORCE:
