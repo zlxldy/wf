@@ -26,8 +26,6 @@ std::vector<std::string> make_args(int argc, char const *argv[]) {
     return args;
 }
 
-std::vector<std::string> make_eq_args();
-
 template<typename... Args>
     std::vector<std::string> make_eq_args(Args... args) {
         return {args...};
@@ -57,7 +55,7 @@ void print_i(const item it, size_t ll, bool all = false) {
     }
     std::cout << '<'
               << it.size << ' '
-              << it.last_write_time.time_since_epoch().count() << ' '
+              << it.last_write_time << ' '
               << it.permissions << ' '
               << '>'
               << std::endl;
@@ -83,13 +81,15 @@ int main(int argc, char const *argv[]){
     if (!args.size()) {
         std::cout << "Usage: wf [options] [path]\n"
                   << "Options:\n"
-                  << "  -n, --nerd    Use nerd font icons\n"
-                  << "  -a, --all       Show hidden items\n";
+                  << "  -n, --nerd                 Use nerd font icons\n"
+                  << "  -a, --all                    Show hidden items\n"
+                  << "  -s, --stamp Show last write time by time stamp\n";
         return -1;
     }
 
     bool hvnd = have_arg(args, make_eq_args("-n", "--nerd"));
     bool hvall = have_arg(args, make_eq_args("-a", "--all"));
+    bool hvstmp = have_arg(args, make_eq_args("-s", "--stamp"));
 
     std::string path = ".";
     for (std::string arg : args) {
@@ -100,7 +100,7 @@ int main(int argc, char const *argv[]){
     }
 
     fs::path dir_path(path);
-    std::vector<item> items = trav(dir_path, hvnd);
+    std::vector<item> items = trav(dir_path, hvnd, hvstmp);
     print_vi(items, hvall);
     return 0;
 }
