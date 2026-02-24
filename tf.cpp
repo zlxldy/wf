@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <sstream>
 #include "item.hpp"
 #include "tf.hpp"
 
