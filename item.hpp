@@ -20,8 +20,8 @@ struct item{
     fs::path path;
     std::string name;
     std::string type;
-    long long   size;
-    std::string  last_write_time;
+    std::string size;
+    std::string last_write_time;
     std::string permissions;
 };
 

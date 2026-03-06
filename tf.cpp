@@ -55,7 +55,24 @@ std::vector<item> trav(fs::path& path, bool nerd = false, bool use_time_stamp = 
             }
         }
 
-        it.size = entry.is_regular_file() ? fs::file_size(entry) : 0;
+        long long size_ll = entry.is_regular_file() ? fs::file_size(entry) : 0;
+        long long t = 1;
+        std::string unit = "B";
+
+        while (size_ll >= 1000) {
+            size_ll /= 1024;
+            t *= 1024;
+
+            if (t == 1024) {
+                unit = "KB";
+            } else if (t == 1024 * 1024) {
+                unit = "MB";
+            } else if (t == 1024 * 1024 * 1024) {
+                unit = "GB";
+            }
+        }
+        
+        it.size = std::to_string(size_ll) + unit;
 
         auto ftime = std::filesystem::last_write_time(entry);
         auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
