@@ -43,10 +43,19 @@ bool have_arg(std::vector<std::string> args, std::vector<std::string> arg) {
     return false;
 }
 
-void print_i(const item it, size_t ll, bool all = false, bool right = false) {
+void print_i(const item it, size_t ll, bool all = false, bool right = false, bool table = false, bool nerd = false) {
     if (!all && is_hidden(it.path)) {
         return;
     }
+    if (table) {
+        if (nerd) {
+            std::cout << it.type.data() << ' ';
+        }
+        std::cout << it.name << ' ';
+        return;
+    }
+    
+    
 
     if (!right) {
         std::cout << it.type.data()
@@ -77,7 +86,7 @@ void print_i(const item it, size_t ll, bool all = false, bool right = false) {
               << std::endl;
 }
 
-void print_vi(const std::vector<item>& it, bool all = false, bool right = false) {
+void print_vi(const std::vector<item>& it, bool all = false, bool right = false, bool table = false, bool nerd = false) {
     size_t ll = 0;
     for (auto i : it) {
         if (i.name.length() > ll) {
@@ -85,7 +94,7 @@ void print_vi(const std::vector<item>& it, bool all = false, bool right = false)
         }
     }
     for (auto i : it) {
-        print_i(i, ll, all, right);
+        print_i(i, ll, all, right, table, nerd);
     }
 }
 
@@ -100,7 +109,8 @@ int main(int argc, char const *argv[]){
                   << "  -n, --nerd                 Use nerd font icons\n"
                   << "  -a, --all                    Show hidden items\n"
                   << "  -s, --stamp Show last write time by time stamp\n"
-                  << "  -r, --right                    Use right align\n";
+                  << "  -r, --right                    Use right align\n"
+                  << "  -t, --table                    Use table format\n";
         return -1;
     }
 
@@ -108,6 +118,7 @@ int main(int argc, char const *argv[]){
     bool hvall = have_arg(args, make_eq_args("-a", "--all"));
     bool hvstmp = have_arg(args, make_eq_args("-s", "--stamp"));
     bool hvright = have_arg(args, make_eq_args("-r", "--right"));
+    bool hvtable = have_arg(args, make_eq_args("-t", "--table"));
 
     std::string path = ".";
     for (std::string arg : args) {
@@ -119,6 +130,6 @@ int main(int argc, char const *argv[]){
 
     fs::path dir_path(path);
     std::vector<item> items = trav(dir_path, hvnd, hvstmp);
-    print_vi(items, hvall, hvright);
+    print_vi(items, hvall, hvright, hvtable, hvnd);
     return 0;
 }

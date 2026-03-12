@@ -2,7 +2,7 @@
 
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
-v1.0.0\
+v1.1.0\
 一个基于***c++17***的**cli**工具，显示文件夹中的内容，**并且 跨平台（windows、类unix（linux,mac））**！
 ## 安装
 windows下可能会被拦截[重启玄学或许能解决(认真的吗？)]\
@@ -16,11 +16,13 @@ $ make -f clang.mak #clang++编译器
 
 windows同理，不过还准备了两个ps1脚本（clangb.ps1、gccb.ps1）看名字大概就知道怎么选择运行了
 
-## v1.0.0
-文件大小显示人类可读的单位，并智能选择单位（B、KB、MB、GB），尽量减少误差
+## v1.1.0
+增添table模式，加上-t或--table选项即可开启，效果是仅输出文件名，可与-n -a选项搭配使用
 
 ## History
-### v1.0.0（当前版本）
+### v1.1.0（当前版本）
+### v1.0.0
+文件大小显示人类可读的单位，并智能选择单位（B、KB、MB、GB），尽量减少误差
 ### v0.5.0b
 添加右对齐模式，加上-r或--right选项即可开启
 ### v0.4.1b
@@ -42,5 +44,5 @@ makefile的编译去掉了item.hpp，解决了clang编译器的编译错误
 ### V0.0.0a
 alpha第一个小版本
 
-## B+测试段
-功能逐渐完善，即将进入正式版本
+# 正式版本
+功能完善了www，最近不写了（图0魔咒太狠了w）
