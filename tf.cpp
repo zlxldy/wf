@@ -17,7 +17,7 @@ std::string time_stamp_to_clock(time_t ts) {
     #ifdef _WIN32
     localtime_s(&time_info, &ts);
     #else
-    localtime_r(&ts, &tm_info);
+    localtime_r(&ts, &time_info);
     #endif
     std::ostringstream oss;
     oss << std::put_time(&time_info, "%Y-%m-%d %H:%M:%S");
